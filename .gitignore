@@ -1,0 +1,21 @@
+# C++ build files
+*.exe
+*.out
+*.o
+
+
+# Node backend
+node_modules/
+uploads/
+
+# Huffman generated file
+*.huff 
+
+# Ignore generated test outputs but keep input
+
+test/*.huff
+test/result.txt
+
+
+# Vscode
+.vscode/
