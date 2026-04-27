@@ -1,35 +1,95 @@
 const express = require("express");
 const multer = require("multer");
-const { exec } = require("child_process");
+const { execFile } = require("child_process");
+const path = require("path");
+const fs = require("fs");
 const cors = require("cors");
 
 const app = express();
+const PORT = 3000;
+
 app.use(cors());
 
-const upload = multer({ dest: "uploads/" });
+//  Ensure uploads folder exists
+const uploadDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir);
+}
 
-// Compress
+//  Multer storage config
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, uploadDir);
+    },
+    filename: function (req, file, cb) {
+        const uniqueName = Date.now() + "-" + file.originalname;
+        cb(null, uniqueName);
+    }
+});
+
+const upload = multer({ storage });
+
+// Path to C++ executable
+const exePath = path.join(__dirname, "..", "huffman.exe");
+
+
 app.post("/compress", upload.single("file"), (req, res) => {
     const inputPath = req.file.path;
     const outputPath = inputPath + ".huff";
 
-    exec(`../huffman.exe compress ${inputPath} ${outputPath}`, (err) => {
-        if (err) return res.status(500).send("Compression failed");
+    execFile(exePath, ["compress", inputPath, outputPath], (err, stdout, stderr) => {
+        if (err) {
+            console.error("Compress Error:", err);
+            console.error("stderr:", stderr);
+            return res.status(500).send("Compression failed");
+        }
 
-        res.download(outputPath);
+        res.download(outputPath, "compressed.huff", (downloadErr) => {
+            if (downloadErr) {
+                console.error("Download error:", downloadErr);
+            }
+
+            // 🧹 Cleanup temp files
+            try {
+                fs.unlinkSync(inputPath);
+                fs.unlinkSync(outputPath);
+            } catch (e) {
+                console.error("Cleanup error:", e);
+            }
+        });
     });
 });
 
-// Decompress
+
+
 app.post("/decompress", upload.single("file"), (req, res) => {
     const inputPath = req.file.path;
-    const outputPath = inputPath + ".txt";
+    const outputPath = inputPath + ".out";
 
-    exec(`../huffman.exe decompress ${inputPath} ${outputPath}`, (err) => {
-        if (err) return res.status(500).send("Decompression failed");
+    execFile(exePath, ["decompress", inputPath, outputPath], (err, stdout, stderr) => {
+        if (err) {
+            console.error("Decompress Error:", err);
+            console.error("stderr:", stderr);
+            return res.status(500).send("Decompression failed");
+        }
 
-        res.download(outputPath);
+        res.download(outputPath, "decompressed_file", (downloadErr) => {
+            if (downloadErr) {
+                console.error("Download error:", downloadErr);
+            }
+
+            // Cleanup temp files
+            try {
+                fs.unlinkSync(inputPath);
+                fs.unlinkSync(outputPath);
+            } catch (e) {
+                console.error("Cleanup error:", e);
+            }
+        });
     });
 });
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
