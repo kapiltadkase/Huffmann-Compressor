@@ -44,17 +44,19 @@ app.post("/compress", upload.single("file"), (req, res) => {
             return res.status(500).send("Compression failed");
         }
 
-        res.download(outputPath, "compressed.huff", (downloadErr) => {
-            if (downloadErr) {
-                console.error("Download error:", downloadErr);
+        const originalName = req.file.originalname;
+
+        res.download(outputPath, originalName + ".huff", (downloadErr) => {
+            if(downloadErr){
+                console.error(downloadErr);
             }
 
-            // 🧹 Cleanup temp files
-            try {
+            try{
                 fs.unlinkSync(inputPath);
                 fs.unlinkSync(outputPath);
-            } catch (e) {
-                console.error("Cleanup error:", e);
+            }
+            catch(e){
+                console.error(e);
             }
         });
     });
@@ -73,17 +75,23 @@ app.post("/decompress", upload.single("file"), (req, res) => {
             return res.status(500).send("Decompression failed");
         }
 
-        res.download(outputPath, "decompressed_file", (downloadErr) => {
-            if (downloadErr) {
-                console.error("Download error:", downloadErr);
+        let originalName = req.file.originalname;
+
+        if(originalName.endsWith(".huff")){
+            originalName = originalName.slice(0,-5);
+        }
+
+        res.download(outputPath, originalName, (downloadErr) =>{
+            if(downloadErr){
+                console.error(downloadErr);
             }
 
-            // Cleanup temp files
-            try {
+            try{
                 fs.unlinkSync(inputPath);
                 fs.unlinkSync(outputPath);
-            } catch (e) {
-                console.error("Cleanup error:", e);
+            }
+            catch(e){
+                console.error(e);
             }
         });
     });

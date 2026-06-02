@@ -18,7 +18,7 @@ function compress() {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "compressed.huff";
+        a.download = file.name + ".huff";
         a.click();
 
         document.getElementById("status").innerText = "Done!";
@@ -46,7 +46,15 @@ function decompress() {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "decompressed.txt";
+        
+        let originalName = file.name;
+
+        if(originalName.endsWith(".huff")){
+            originalName = originalName.slice(0,-5);
+        }
+
+        a.download = originalName;
+
         a.click();
 
         document.getElementById("status").innerText = "Done!";
