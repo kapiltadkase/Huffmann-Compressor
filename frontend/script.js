@@ -21,10 +21,10 @@ function compress() {
         a.download = file.name + ".huff";
         a.click();
 
-        document.getElementById("status").innerText = "Done!";
+        document.getElementById("status").innerText = "Compression completed!";
     })
     .catch(() => {
-        document.getElementById("status").innerText = "Error!";
+        document.getElementById("status").innerText = "Compression failed!";
     });
 }
 
@@ -57,9 +57,9 @@ function decompress() {
 
         a.click();
 
-        document.getElementById("status").innerText = "Done!";
+        document.getElementById("status").innerText = "Decompression completed!";
     })
     .catch(() => {
-        document.getElementById("status").innerText = "Error!";
+        document.getElementById("status").innerText = "Decompression failed!";
     });
 }
