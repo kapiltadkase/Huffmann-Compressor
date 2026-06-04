@@ -13,13 +13,34 @@ function compress() {
         method: "POST",
         body: formData
     })
-    .then(res => res.blob())
-    .then(blob => {
+    .then(async res => {
+
+        const originalSize = res.headers.get("X-Original-Size");
+        const compressedSize = res.headers.get("X-Compressed-Size");
+        const ratio = res.headers.get("X-Saved-Spaced");
+
+        const blob = await res.blob();
+
+        return {
+            blob,
+            originalSize,
+            compressedSize,
+            ratio
+        };
+    })
+    .then(data => {
+        const blob = data.blob;
+
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
         a.download = file.name + ".huff";
         a.click();
+
+        document.getElementById("stats").style.display = "block";
+        document.getElementById("originalSize").innerText = "Original Size: " + data.originalSize + " bytes";
+        document.getElementById("compressedSize").innerText = "Compressed Size: " + data.compressedSize + " bytes";
+        document.getElementById("spaceSaved").innerText = "Space Saved: " + data.ratio + "%";
 
         document.getElementById("status").innerText = "Compression completed!";
     })

@@ -44,6 +44,19 @@ app.post("/compress", upload.single("file"), (req, res) => {
             return res.status(500).send("Compression failed");
         }
 
+        const originalSize = fs.statSync(inputPath).size;
+        const compressedSize = fs.statSync(outputPath).size;
+
+        const ratio = (((originalSize - compressedSize)/originalSize)*100).toFixed(2);
+
+        console.log(`Original Size: ${originalSize} bytes`);
+        console.log(`Compressed Size: ${compressedSize} bytes`);
+        console.log(`Space Saved: ${ratio}%`);
+
+        res.setHeader("X-Original-Size", originalSize);
+        res.setHeader("X-Compressed-Size",compressedSize);
+        res.setHeader("X-Saved_Space", ratio);
+
         const originalName = req.file.originalname;
 
         res.download(outputPath, originalName + ".huff", (downloadErr) => {

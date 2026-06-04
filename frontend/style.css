@@ -75,3 +75,22 @@ button{
     color:#444;
 }
 
+.stats-card{
+    margin-top:20px;
+    padding:15px;
+    border-radius: 10px;
+    background: #f4f7ff;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(0,0,0,0,1);
+}
+
+.stats-card h3{
+    margin-bottom: 10px;
+    color:#333;
+}
+
+.stats-card p{
+    margin: 5px 0;
+    font-size: 15px;
+}
+

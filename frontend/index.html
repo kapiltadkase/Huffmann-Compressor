@@ -16,7 +16,15 @@
             <button class="decompress-btn" onClick="decompress()">Decompress</button>
         </div>
 
-        <p id="status"></p>
+        <div id="status"></div>
+
+        <div id="stats" class="stats-card" style="display:none;">
+            <h3>Compression Results</h3>
+            <p id="originalSize"></p>
+            <p id="compressedSize"></p>
+            <p id="spaceSaved"></p>
+        </div>
+        
     </div>
 
     <script src="script.js"></script>
