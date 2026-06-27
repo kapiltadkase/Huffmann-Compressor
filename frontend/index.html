@@ -7,13 +7,18 @@
 <body>
     <div class="container">
         <h1>Huffman Compressor</h1>
-        <p>Lossless file compression using Huffman Coding </p>
+        <p>Lossless file compression using Huffman Coding</p>
 
         <input type="file" id="fileInput">
 
         <div class="buttons">
-            <button class="compress-btn" onClick="compress()">Compress</button>
-            <button class="decompress-btn" onClick="decompress()">Decompress</button>
+            <button type="button" id="compressBtn" class="compress-btn">Compress</button>
+            <button type="button" id="decompressBtn" class="decompress-btn">Decompress</button>
+        </div>
+
+        <div id="actions" style="display:none;">
+            <button type="button" id="downloadBtn">Download</button>
+            <button type="button" id="resetBtn">Reset</button>
         </div>
 
         <div id="status"></div>
@@ -24,11 +29,8 @@
             <p id="compressedSize"></p>
             <p id="spaceSaved"></p>
         </div>
-        
     </div>
 
     <script src="script.js"></script>
-    
-    
 </body>
 </html>

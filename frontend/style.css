@@ -1,49 +1,49 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
 
-body{
+body {
     background: #f4f6f9;
-    height: 100vh;
-    display:flex;
+    min-height: 100vh;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.container{
+.container {
     background: white;
     padding: 40px;
     border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,1);
-    width:500px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 500px;
     text-align: center;
 }
 
-h1{
+h1 {
     margin-bottom: 10px;
-    text-align: center;
 }
 
-p{
-    color:#222;
+p {
+    color: #222;
     margin-bottom: 25px;
 }
 
-input[type="file"]{
+input[type="file"] {
     margin-bottom: 20px;
 }
 
-.buttons{
-    display:flex;
-    gap:10px;
+.buttons {
+    display: flex;
+    gap: 10px;
     justify-content: center;
+    margin-bottom: 16px;
 }
 
-button{
-    border:none;
+button {
+    border: none;
     padding: 12px 24px;
     border-radius: 8px;
     cursor: pointer;
@@ -51,46 +51,61 @@ button{
     transition: 0.2s;
 }
 
-.compress-btn{
+.compress-btn {
     background: #2563eb;
-    color:white;
+    color: white;
 }
 
-.compress-btn:hover{
-    transform:translateY(-2px);
-}
-
-.decompress-btn{
-    background: #10b981;
-    color:white;
-}
-
-.decompress-btn:hover{
+.compress-btn:hover {
     transform: translateY(-2px);
 }
 
-#status{
-    margin-top:20px;
-    font-weight: bold;
-    color:#444;
+.decompress-btn {
+    background: #10b981;
+    color: white;
 }
 
-.stats-card{
-    margin-top:20px;
-    padding:15px;
+.decompress-btn:hover {
+    transform: translateY(-2px);
+}
+
+#actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+#actions button {
+    background: #6366f1;
+    color: white;
+}
+
+#actions button:hover {
+    transform: translateY(-2px);
+}
+
+#status {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #444;
+}
+
+.stats-card {
+    margin-top: 20px;
+    padding: 15px;
     border-radius: 10px;
     background: #f4f7ff;
     text-align: left;
-    box-shadow: 0 2px 8px rgba(0,0,0,0,1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.stats-card h3{
+.stats-card h3 {
     margin-bottom: 10px;
-    color:#333;
+    color: #333;
 }
 
-.stats-card p{
+.stats-card p {
     margin: 5px 0;
     font-size: 15px;
 }
-
