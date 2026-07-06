@@ -10,7 +10,7 @@ const PORT = 3000;
 
 app.use(cors());
 
-// Serves frontend/index.html, frontend/script.js, frontend/style.css
+
 app.use(express.static(path.join(__dirname, "..", "frontend")));
 
 const uploadDir = path.join(__dirname, "uploads");
@@ -30,7 +30,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// huffman.exe is in the project root (one level above backend/)
+
 const exePath = path.join(__dirname, "..", "huffman.exe");
 
 console.log("Looking for huffman.exe at:", exePath);
